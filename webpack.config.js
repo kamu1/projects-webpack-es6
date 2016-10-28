@@ -15,16 +15,17 @@ var BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 //打包环境
 const debug = process.env.NODE_ENV !== 'production';
 
+
 //打包生成文件的根目录
 var bootPath = "dist/";
 //代码源目录
 var mainPath = 'src/';
 //项目目录
-var proPath = 'apps/orthocore/';
+var proPath = 'apps/reactES6/';
 //图片等资源目录
 var resPath = "/imgs/";
 //网站ico图标位置
-var icoPath = mainPath + 'apps/orthocore/inc/imgs/favicon.ico';
+var icoPath = mainPath + 'apps/reactES6/inc/imgs/favicon.ico';
 //获取入口文件列表
 var entries = getEntry('./' + mainPath + proPath + '**/index.js', mainPath + proPath);
 //提取公共文件
@@ -88,7 +89,7 @@ var config = {
         }),
         //加载jq
         new webpack.ProvidePlugin({
-             // $: 'jquery'
+             // $: "jquery"
         }),
         // 将公共模块提取，生成名为vendors的chunk
         new CommonsChunkPlugin({
