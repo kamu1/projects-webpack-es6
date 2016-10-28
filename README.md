@@ -1,5 +1,5 @@
 # projects-webpack-es6
-以webpack为基础来打包构建的前端项目
+以webpack为基础来打包构建的前端项目(reactJS + react-router + ES6)
 #### react SPA Demo
 	reactJS + react-router + ES6
 > 
