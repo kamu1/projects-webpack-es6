@@ -1,6 +1,6 @@
-# projects-webpack-es6
+﻿# projects-webpack-es6
 以webpack为基础来打包构建的前端项目(reactJS + react-router + ES6)
-#### react SPA Demo
+### react SPA Demo
 	reactJS + react-router + ES6
 > 
 1. git clone https://github.com/kamu1/projects-webpack-es6.git
@@ -9,7 +9,7 @@
 1. webpack --watch
 1. http://localhost:3000/dist
 
-#### webpack.config.js
+### webpack.config.js
 > 
 + 实现多项目打包；
 + 解决了多入口引用；
