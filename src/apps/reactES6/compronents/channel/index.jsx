@@ -1,7 +1,7 @@
 import React ,{Component} from 'react';
 import {Router,Link} from 'react-router';
 import Header from '../header/index.jsx';
-import ContentList from '../content/contentList.jsx';
+import ContentList from './contentList.jsx';
 
 class Channel extends Component {
     componentWillMount() {

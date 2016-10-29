@@ -73,7 +73,7 @@ class ContentInfo extends Component {
                     <div className="swiper-wrapper">
                         <div className="swiper-slide">
                             <div style={{margin:"10px 10px 30px 10px",lineHeight:"1.8em"}}>
-                                <h3 style={{textAlign:"center"}}><span dangerouslySetInnerHTML={{__html: data.title}} style={{textAlign:"left"}}></span></h3>
+                                <h3 style={{textAlign:"center"}}><span dangerouslySetInnerHTML={{__html: data.title}} style={{textAlign:"left",display:"inline-block"}}></span></h3>
                                 <h6 className="n" dangerouslySetInnerHTML={{__html: data.subTitle}} style={{color:"#666",borderBottom:"1px solid #eee",paddingBottom:5}}></h6>
                                 {imgs.length && (!data.imageGroup || !data.imageGroup.length) ?
                                     <ul className={"n imgs img_" + imgs.length} style={{textAlign:"center"}}>
@@ -86,10 +86,12 @@ class ContentInfo extends Component {
                                         {data.imageGroup.map((item,i) => (
                                             <li style={{marginTop:10}}>
                                                 <div dangerouslySetInnerHTML={{__html: item.image}}></div>
-                                                <h4 className="n" style={{marginTop:10,fontSize:"1em"}}>{item.title}</h4>
-                                                <div>
-                                                    <p className="n" style={{display:"inline-block",textAlign:"left",fontSize:"0.8em",color:"#666"}}>{item.content}</p>
-                                                </div>
+                                                {item.title ?
+                                                    <h4 className="n" style={{marginTop:10,fontSize:"1em"}}>{item.title}</h4> : ''}
+                                                {item.content ?
+                                                    <div>
+                                                        <p className="n" style={{display:"inline-block",textAlign:"left",fontSize:"0.8em",color:"#666"}}>{item.content}</p>
+                                                    </div> : '' }
                                             </li>
 
                                         ))}

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 import $ from "webpack-zepto";
 import '../../../../public/plugin/swiper/swiper.min.css'
@@ -24,6 +25,19 @@ class Header extends Component {
                     swiper.onResize();
                 }
             });
+
+            var swiperH = new Swiper('.swiper-tab', {
+                scrollbar: '.swiper-scrollbar',
+                direction: 'horizontal',
+                slidesPerView: 'auto',
+                mousewheelControl: true,
+                freeMode: true,
+                observer:true,//修改swiper自己或子元素时，自动初始化swiper
+                observeParents:true,//修改swiper的父元素时，自动初始化swiper
+                onTouchStart: function(swiper, even) {
+                    swiper.onResize();
+                }
+            });
         }
     }
     componentDidMount(){
@@ -34,14 +48,37 @@ class Header extends Component {
     }
     render() {
         let props = this.props;
+        //存储推荐导航
+        let recommend=[];
         //渲染主导航
-        var mainnav=props.mainNav.map((item, i) => (
-            <Nav1
-                {...props}
-                {...item}
-                childNav={props.childNav}
+        let mainnav=[];
+        //push非  只推荐  的导航
+        props.mainNav.forEach((item, i) => {
+            if (item.recommend < 2) {
+                mainnav.push (
+                    <Nav1
+                        {...props}
+                        {...item}
+                        childNav={props.childNav}
+                    />
+                )
+            }
+            if (item.recommend >= 1) {
+                recommend.push(item);
+            }
+        });
+        //push保存子类推荐的导航
+        props.childNav.forEach((item, i) => {
+            if (item.recommend == 2) {
+                recommend.push(item);
+            }
+        });
+        let recommendNav = recommend.map((item, i) => (
+            <RecommendNav
+                item={item}
+                requestContentList={props.requestContentList}
             />
-        ))
+        ));
         return (
             <div className="tab-navigation">
                 <header>
@@ -71,7 +108,44 @@ class Header extends Component {
                     }
                     <h3>{props.documentTitle}</h3>
                 </header>
+                {props.navMenu != "hide" ?
+                    <div className="tabnav swiper-container swiper-tab">
+                        <div className="swiper-wrapper">
+                                <table className="swiper-slide" style={{whiteSpace:"nowrap"}}>
+                                    <tr>
+                                        {recommendNav}
+                                    </tr>
+                                </table>
+                        </div>
+                        <div className="swiper-scrollbar"></div>
+                    </div> : '' }
             </div>
+        )
+    }
+}
+//推荐选项卡导航
+class RecommendNav extends Component {
+    onRequestContentList(ev, id){
+        if (id && id>0) {
+            this.props.requestContentList(id);
+            setTimeout(function(){
+                $("#radio_navmenu").prop("checked",true);
+            },50);
+        }
+    }
+    componentWillMount(){
+        //先指定读一下推荐栏信息
+        this.props.requestContentList(16);
+    }
+    render(){
+        let props = this.props.item;
+        var activeStyle = {};
+        if (props.active){
+            activeStyle = {borderBottom:"2px solid #2196f3"}
+        }
+
+        return (
+            <td ref="tabnav" style={activeStyle}><span onClick={(ev, id) => {this.onRequestContentList(ev,props.id)}}>{props.title}</span></td>
         )
     }
 }
@@ -79,7 +153,8 @@ class Header extends Component {
 class Nav1 extends Component {
     onRequestContentList(ev, id){
         if (id && id>0) {
-            this.props.requestContentList(id);setTimeout(function(){
+            this.props.requestContentList(id);
+            setTimeout(function(){
                 $("#radio_navmenu").prop("checked",true);
             },50);
         }

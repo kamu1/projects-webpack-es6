@@ -63,8 +63,10 @@ class ItemList extends Component {
                 onTouchStart: (swiper, even) => {
                     $(".contentlist-slide").each(function(){
                         //安卓下列表滚动异常的问题
-                        $(this).height($(this).children().height()+120);
-                    })
+                        if ($(this).height() < $(this).children().height()){
+                            $(this).height($(this).children().height()+160);
+                        }
+                    });
                     swiper.onResize();
                 },
                 onTouchEnd: (swiper) => {
@@ -108,6 +110,7 @@ class ItemList extends Component {
                 <div className={"swiper-container swiper-contentlist swiper-contentlist" + props.index}>
                     <div className="swiper-wrapper">
                         <div className="swiper-slide contentlist-slide">
+                            <div className="tab-area"></div>
                             <ol className="n card-list">
                                 {itemList}
                             </ol>
@@ -130,7 +133,7 @@ class ItemRow extends Component {
     render() {
         let props = this.props,
             item=props.item,
-            imgs;
+            imgs=[];
         if (item.imagesList){
             imgs = item.imagesList.filter((item,i) => {
                 return item ? true : false;

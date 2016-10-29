@@ -2,6 +2,7 @@ $navColor:green;
 $headerColor:#FFF;
 $headerBgColor:#2196f3;
 $headerHeight: 50px;
+$tabNavHeight:40px;
 *{
   -webkit-tap-highlight-color: transparent
 }
@@ -76,6 +77,8 @@ body{
       }
     }
     header{
+      position: relative;
+      z-index:2;
       height:$headerHeight;
       line-height: $headerHeight;
       color: $headerColor;
@@ -193,11 +196,37 @@ body{
         }
       }
     }
+    /*选项卡导航样式*/
+    .tabnav{
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 1px 10px rgba(0,0,0,.08);
+      .swiper-wrapper{
+        border-bottom:1px solid #EEE;
+        table{
+          border-collapse: collapse;
+          td{
+            height:$tabNavHeight;
+            line-height: $tabNavHeight;
+            padding:0 10px;
+            margin:0;
+            font-size:14px;
+          }
+        }
+      }
+    }
   }
 }
-/**/
+/*栏目下 选项卡区域的空白高度 */
+.tab-area{
+  height:$tabNavHeight;
+}
+/*详细内容页背景*/
 .swiper-content{
   background: #FFF;
+  img{
+    max-height: auto;
+    height:auto;
+  }
 }
 /*列表样式*/
 .card-list{
