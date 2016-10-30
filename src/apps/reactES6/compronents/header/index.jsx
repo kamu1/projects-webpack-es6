@@ -64,6 +64,7 @@ class Header extends Component {
             if (item.recommend < 2) {
                 mainnav.push (
                     <Nav1
+                        key={'nav1'+i}
                         {...props}
                         {...item}
                         childNav={props.childNav}
@@ -83,6 +84,7 @@ class Header extends Component {
         //console.log("@",this.props)
         let recommendNav = recommend.map((item, i) => (
             <RecommendNav
+                key={'recommendNav'+i}
                 item={item}
                 requestContentList={props.requestContentList}
                 updateState={props.updateState}
@@ -188,6 +190,7 @@ class Nav1 extends Component {
                 })
                 nav2.push (
                     <Nav2
+                        key={'nav2'+props.id+i}
                         navdata={nav3}
                         {...item}
                         requestContentList={props.requestContentList}
@@ -224,7 +227,7 @@ class Nav2 extends Component {
                 <span style={props.active ? {fontWeight:"bold",color:"#FFC107"}:{}} onClick={(ev, id) => {this.onRequestContentList(ev,props.id)}}>{props.title}</span>
                 <ul className="n">
                     {props.navdata.map((item, i) => (
-                        <li key={props.id + '' +item.id}>
+                        <li key={'nav3'+props.id + '' +item.id}>
                             <span onClick={(ev, id) => {this.onRequestContentList(ev,item.id)}}>{item.title}</span>
                         </li>
                     ))}

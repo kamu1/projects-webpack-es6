@@ -10,7 +10,6 @@ window.swiper={};
 class ContentList extends Component {
     render() {
         let props = this.props;
-        //console.log(props)
         var channels = [];
         //将对象转成数组，使于遍历
         for (var item in props.channelsData) {
@@ -19,6 +18,7 @@ class ContentList extends Component {
         //遍历组件，实现嵌套循环
         let channelsList = channels.map((item, i) => (
             <ItemList
+                key={'itemList' + item.id}
                 index={i}
                 id={item.id}
                 item={item}
@@ -52,18 +52,10 @@ class ItemList extends Component {
                 onInit:(swiper)=>{
                     //加载后清除引用的class，防止被同名重新初始化
                     $(".swiper-contentlist"+id).removeClass("swiper-contentlist"+id);
-                    //console.log(window.swiper["id_"+id])
-                    //if (window.swiper["id_"+id] instanceof Array && window.swiper["id_"+id].length>1){
-                    //    window.swiper["id_"+id].forEach((item,i) => {
-                    //        console.log(id,item);
-                    //    });
-                    //}
-                    //console.log(window.swiper);
                 },
                 onSetTransition: (swiper, transiton) => {
                     //记录每个滑块的Y值
                     props.setY(id, swiper.getWrapperTranslate("y"));
-                    //console.log(props.swiperY)
                     if (swiper.translate < 0  && -(swiper.virtualSize - swiper.height) >= swiper.translate){
                         let props = this.props,
                             id= props.item.id,
@@ -99,7 +91,6 @@ class ItemList extends Component {
         }
     }
     componentDidMount(){
-        //console.log(this.props.id,',',this.props.channelId)
         this.onSwiper(this.props.id);
     }
 
@@ -118,6 +109,7 @@ class ItemList extends Component {
             //遍历组件，实现嵌套循环
             itemList = props.item.list.map((item, i) => (
                 <ItemRow
+                    key={'itemRow'+props.index+''+i}
                     index={props.index + '' + i}
                     item={item}
                 />
@@ -182,7 +174,7 @@ class ItemRow extends Component {
                     <div className={'imgs img'+ imgs.length}>
                         <ul className="n">
                             {imgs.map((img,i) => (
-                                <li><span dangerouslySetInnerHTML={{__html: img}}></span></li>
+                                <li key={'itemrowImg' + i}><span dangerouslySetInnerHTML={{__html: img}}></span></li>
                             ))}
                         </ul>
                     </div> : ''}

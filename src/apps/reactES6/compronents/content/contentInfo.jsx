@@ -75,13 +75,13 @@ class ContentInfo extends Component {
                                 {imgs.length && (!data.imageGroup || !data.imageGroup.length) ?
                                     <ul className={"n imgs img_" + imgs.length} style={{textAlign:"center"}}>
                                         {imgs.map((item,i) => (
-                                            <li dangerouslySetInnerHTML={{__html: item}} style={{marginTop:10}}></li>
+                                            <li key={'contentinfoImgs'+i} dangerouslySetInnerHTML={{__html: item}} style={{marginTop:10}}></li>
                                         ))}
                                     </ul> : ''}
                                 {data.imageGroup && data.imageGroup.length ?
                                     <ul className={"n img-grounp img_" + data.imageGroup.length} style={{textAlign:"center"}}>
                                         {data.imageGroup.map((item,i) => (
-                                            <li style={{marginTop:10}}>
+                                            <li key={'contentinfoImgsGroup'+i} style={{marginTop:10}}>
                                                 <div dangerouslySetInnerHTML={{__html: item.image}}></div>
                                                 {item.title ?
                                                     <h4 className="n" style={{marginTop:10,fontSize:"1em"}}>{item.title}</h4> : ''}

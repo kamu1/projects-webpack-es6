@@ -44,26 +44,22 @@ class Channel extends Component {
         }
 
         let swiperY = this.props.swiperY;
-        //console.log(window.swiper)
         setTimeout(() => {
             for (let id in swiperY){
                 if (window.swiper[id]){
                     if (window.swiper[id] instanceof Array){
                         for (var i =0; i<window.swiper[id].length;i++){
                             if (window.swiper[id][i].setWrapperTranslate){
-                                //console.log(111,"-",id,swiperY[id])
                                 window.swiper[id][i].setWrapperTranslate(swiperY[id]);
                             }
                         }
                     }else{
                         if (window.swiper[id].setWrapperTranslate){
-                            //console.log(222,"=",id,swiperY[id])
                             window.swiper[id].setWrapperTranslate(swiperY[id]);
                         }
                         //window.swiper[id][window.swiper[id].length].setWrapperTranslate(swiperY[id]);
                     }
                     //window.swiper[id].setWrapperTranslate(swiperY[id]);
-                    //console.log(swiper[id].length)
                 }
             }
         },10)
@@ -81,7 +77,7 @@ class Channel extends Component {
     render() {
         let props = this.props;
         return (
-            <div>
+            <div key="Channel">
                 <Header
                     documentTitle={props.documentTitle}
                     mainNav={props.mainNav}

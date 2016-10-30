@@ -15,6 +15,7 @@ var BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 //打包环境
 const debug = process.env.NODE_ENV !== 'production';
 
+//console.log("NODE_ENV",process.env.NODE_ENV)
 
 //打包生成文件的根目录
 var bootPath = "dist/";
@@ -76,8 +77,8 @@ var config = {
         //读取打包环境是否为生产环境
         new webpack.DefinePlugin({
           'process.env':{
-            // 'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-            'NODE_ENV': JSON.stringify("production")
+            'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+            // 'NODE_ENV': JSON.stringify("production")
           }
         }),
         //开启静态服务器

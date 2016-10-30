@@ -17,4 +17,4 @@ render(
             <Route path="content(/:channelId(/:id))" component={Content} />
         </Route>
     </Router>
-, document.body);
+, document.getElementById("app"));

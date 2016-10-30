@@ -34,8 +34,9 @@ img{
   text-decoration: none;
   font-weight:normal;
 }
-body{
-  >div:last-child{width:10px !important;height:10px;box-sizing: border-box; overflow: hidden;left:0px;}
+#app{
+  height:100%;
+  /*>div:last-child{width:10px !important;height:10px;box-sizing: border-box; overflow: hidden;left:0px;}*/
   > div:first-child{
     height:100%;
     >div{

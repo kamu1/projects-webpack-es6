@@ -54,6 +54,7 @@ class Content extends Component {
         return (
             <div>
                 <ContentInfo
+                    key={'contentInfo'+props.channerId}
                     documentTitle={props.documentTitle}
                     contentData={props.contentData}
                     updateState={props.updateState}
