@@ -4,11 +4,13 @@ import $ from "webpack-zepto";
 import Hammer from 'react-hammerjs';
 import '../../../../public/plugin/swiper/swiper.min.css'
 import Swiper from '../../../../public/plugin/swiper/swiper.min.js';
+window.swiper={};
 
 //栏目组件
 class ContentList extends Component {
     render() {
         let props = this.props;
+        //console.log(props)
         var channels = [];
         //将对象转成数组，使于遍历
         for (var item in props.channelsData) {
@@ -22,6 +24,8 @@ class ContentList extends Component {
                 item={item}
                 channelId={props.channelId}
                 requestData={props.requestData}
+                swiperY={props.swiperY}
+                setY={props.setY}
             />
         ));
         return (
@@ -36,8 +40,8 @@ class ItemList extends Component {
     constructor(props){
         super(props);
         //滑动功能
-        this.onSwiper = () => {
-            var swiper = new Swiper(".swiper-contentlist", {
+        this.onSwiper = (id) => {
+            window.swiper["id_"+id] = new Swiper(".swiper-contentlist"+id, {
                 scrollbar: '.swiper-scrollbar',
                 direction: 'vertical',
                 slidesPerView: 'auto',
@@ -45,11 +49,21 @@ class ItemList extends Component {
                 freeMode: true,
                 observer:true,//修改swiper自己或子元素时，自动初始化swiper
                 observeParents:true,//修改swiper的父元素时，自动初始化swiper
-                onInit:()=>{
+                onInit:(swiper)=>{
                     //加载后清除引用的class，防止被同名重新初始化
-                    $(".swiper-contentlist").removeClass("swiper-contentlist");
+                    $(".swiper-contentlist"+id).removeClass("swiper-contentlist"+id);
+                    //console.log(window.swiper["id_"+id])
+                    //if (window.swiper["id_"+id] instanceof Array && window.swiper["id_"+id].length>1){
+                    //    window.swiper["id_"+id].forEach((item,i) => {
+                    //        console.log(id,item);
+                    //    });
+                    //}
+                    //console.log(window.swiper);
                 },
                 onSetTransition: (swiper, transiton) => {
+                    //记录每个滑块的Y值
+                    props.setY(id, swiper.getWrapperTranslate("y"));
+                    //console.log(props.swiperY)
                     if (swiper.translate < 0  && -(swiper.virtualSize - swiper.height) >= swiper.translate){
                         let props = this.props,
                             id= props.item.id,
@@ -60,6 +74,10 @@ class ItemList extends Component {
                         }
                     }
                 },
+                onTransitionEnd(swiper){
+                    //记录每个滑块的Y值
+                    props.setY(id, swiper.getWrapperTranslate("y"));
+                },
                 onTouchStart: (swiper, even) => {
                     $(".contentlist-slide").each(function(){
                         //安卓下列表滚动异常的问题
@@ -68,9 +86,11 @@ class ItemList extends Component {
                         }
                     });
                     swiper.onResize();
+                    //记录每个滑块的Y值
+                    props.setY(id, swiper.getWrapperTranslate("y"));
                 },
-                onTouchEnd: (swiper) => {
-                    //往下滑到规定值，重新请求数据
+            onTouchEnd: (swiper) => {
+                    //往下滑到设定值，重新请求数据
                     if (swiper.getWrapperTranslate('y')>120){
                     //    this.props.requestData(["channels", this.props.item.id]);
                     }
@@ -79,10 +99,8 @@ class ItemList extends Component {
         }
     }
     componentDidMount(){
-        this.onSwiper();
-    }
-    componentWillUpdate() {
-        //this.onSwiper();
+        //console.log(this.props.id,',',this.props.channelId)
+        this.onSwiper(this.props.id);
     }
 
     //下一页
@@ -105,9 +123,18 @@ class ItemList extends Component {
                 />
             ))
         }
+        var style={
+            height:"100%",
+            width:"100%",
+            position:"absolute",
+            top:0,
+            left:0,
+            zIndex:props.item.active ? "1" : "0",
+            opacity:props.item.active ? "1" : "0",
+        }
         return (
-            <div style={{display:props.item.active ? "block" : "none",height:"100%"}} key={'channelsList'+props.index}>
-                <div className={"swiper-container swiper-contentlist swiper-contentlist" + props.index}>
+            <div style={style} key={'channelsList'+props.index}>
+                <div className={"swiper-container swiper-contentlist" + props.id}>
                     <div className="swiper-wrapper">
                         <div className="swiper-slide contentlist-slide">
                             <div className="tab-area"></div>

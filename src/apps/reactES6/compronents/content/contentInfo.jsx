@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Header from '../header/index.jsx';
 import $ from "webpack-zepto";
 //window.Hammer =require('react-hammerjs');
-import '../../../../public/plugin/swiper/swiper.min.css'
+import '../../../../public/plugin/swiper/swiper.min.css';
 import Swiper from '../../../../public/plugin/swiper/swiper.min.js';
 
 class ContentInfo extends Component {
@@ -39,9 +39,6 @@ class ContentInfo extends Component {
             imgs = data.imagesList.filter((item, i) => {
                 return item ? true : false;
             });
-        }
-        if (data.title){
-            document.title = data.title;
         }
         //<Hammer
         //    onSwipe={this.onSwipe}

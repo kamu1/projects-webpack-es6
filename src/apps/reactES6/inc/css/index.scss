@@ -198,20 +198,33 @@ body{
     }
     /*选项卡导航样式*/
     .tabnav{
-      background: rgba(255,255,255,.92);
+      background: rgba(255,255,255,.95);
       box-shadow: 0 1px 10px rgba(0,0,0,.08);
       .swiper-wrapper{
         border-bottom:1px solid #EEE;
-        table{
+        .swiper-slide{
+          display:table;
           border-collapse: collapse;
-          td{
-            height:$tabNavHeight;
-            line-height: $tabNavHeight;
-            padding:0 10px;
-            margin:0;
-            font-size:14px;
+          border-spacing: 0;
+          >div{
+            display:table-row-group;
+            >div{
+              display:table-cell;
+              height:$tabNavHeight;
+              line-height: $tabNavHeight;
+              >span{
+                display: block;
+                padding:0 10px;
+                margin:0;
+                font-size:14px;
+              }
+            }
           }
         }
+      }
+      .swiper-scrollbar{
+        opacity: 0;
+        visibility:hidden;
       }
     }
   }

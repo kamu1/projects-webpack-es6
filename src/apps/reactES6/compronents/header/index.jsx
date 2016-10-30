@@ -40,6 +40,13 @@ class Header extends Component {
             });
         }
     }
+    componentWillMount(){
+        //初始化时、内容页刷新后返回时，请求 推荐 栏目信息，
+        let props = this.props;
+        if ((!props.mainNav || !props.mainNav.length || props.channelId == 0) && props.navMenu != "hide") {
+            this.props.requestContentList(16);
+        }
+    }
     componentDidMount(){
         this.onSwiper();
     }
@@ -73,10 +80,14 @@ class Header extends Component {
                 recommend.push(item);
             }
         });
+        //console.log("@",this.props)
         let recommendNav = recommend.map((item, i) => (
             <RecommendNav
                 item={item}
                 requestContentList={props.requestContentList}
+                updateState={props.updateState}
+                mainNav={props.mainNav}
+                childNav={props.childNav}
             />
         ));
         return (
@@ -111,11 +122,11 @@ class Header extends Component {
                 {props.navMenu != "hide" ?
                     <div className="tabnav swiper-container swiper-tab">
                         <div className="swiper-wrapper">
-                                <table className="swiper-slide" style={{whiteSpace:"nowrap"}}>
-                                    <tr>
+                                <div className="swiper-slide" style={{whiteSpace:"nowrap"}}>
+                                    <div>
                                         {recommendNav}
-                                    </tr>
-                                </table>
+                                    </div>
+                                </div>
                         </div>
                         <div className="swiper-scrollbar"></div>
                     </div> : '' }
@@ -126,26 +137,31 @@ class Header extends Component {
 //推荐选项卡导航
 class RecommendNav extends Component {
     onRequestContentList(ev, id){
+        let props = this.props;
         if (id && id>0) {
             this.props.requestContentList(id);
+            //更新栏目id
+            props.updateState.channelId(props.item.id);
+            //重新更新导航活动状态
+            props.updateState.mainNav(props.mainNav);
+            props.updateState.childNav(props.childNav);
+            //更新webTitle
+            props.updateState.documentTitle(props.item.title);
             setTimeout(function(){
                 $("#radio_navmenu").prop("checked",true);
             },50);
         }
     }
-    componentWillMount(){
-        //先指定读一下推荐栏信息
-        this.props.requestContentList(16);
-    }
     render(){
         let props = this.props.item;
         var activeStyle = {};
         if (props.active){
-            activeStyle = {borderBottom:"2px solid #2196f3"}
+            activeStyle = {borderBottom:"2px solid #2196f3",color:"#2196f3",fontWeight:"bold"}
+            //activeStyle = {}
         }
 
         return (
-            <td ref="tabnav" style={activeStyle}><span onClick={(ev, id) => {this.onRequestContentList(ev,props.id)}}>{props.title}</span></td>
+            <div ref="tabnav"><span style={activeStyle} onClick={(ev, id) => {this.onRequestContentList(ev,props.id)}}>{props.title}</span></div>
         )
     }
 }

@@ -18,8 +18,12 @@ class Content extends Component {
                 if (localData){
                     if (localData.lastTime && (props.timeDiff(localData.lastTime) < 60*10)) {     //10分钟内
                         //props.updateState.contentData(localData.contentData);
-                        //return ;
+                        ////返回时，修改之前传过来的标题
+                        //let documentTitle=localData.contentData.title;
+                        //props.updateState.documentTitle(documentTitle);
+                        //document.title=documentTitle;
                     }
+                }else{
                 }
                 props.requestData(["contents", cid, id], (data) =>{
                     //将数据存到本地
@@ -31,6 +35,7 @@ class Content extends Component {
             }
         }
     }
+    //若是栏目点击进来的，返回时，修改之前传过来的标题
     componentWillUnmount(){
         let props = this.props;
         let history =props.routeParams;
@@ -38,7 +43,11 @@ class Content extends Component {
         history.title=document.title;
         //记录此页为上一个历史页，防止后退时重新请求接口
         props.onPageHistory(JSON.stringify(history));
-        document.title=props.documentTitle;
+        if (props.pageHistory){
+            let documentTitle=JSON.parse(props.pageHistory).title;
+            props.updateState.documentTitle(documentTitle);
+            document.title=documentTitle;
+        }
     }
     render(){
         let props=this.props;

@@ -2,6 +2,8 @@ import React ,{Component} from 'react';
 import {Router,Link} from 'react-router';
 import Header from '../header/index.jsx';
 import ContentList from './contentList.jsx';
+import $ from "webpack-zepto";
+import Swiper from '../../../../public/plugin/swiper/swiper.min.js';
 
 class Channel extends Component {
     componentWillMount() {
@@ -40,6 +42,31 @@ class Channel extends Component {
                 });
             }
         }
+
+        let swiperY = this.props.swiperY;
+        //console.log(window.swiper)
+        setTimeout(() => {
+            for (let id in swiperY){
+                if (window.swiper[id]){
+                    if (window.swiper[id] instanceof Array){
+                        for (var i =0; i<window.swiper[id].length;i++){
+                            if (window.swiper[id][i].setWrapperTranslate){
+                                //console.log(111,"-",id,swiperY[id])
+                                window.swiper[id][i].setWrapperTranslate(swiperY[id]);
+                            }
+                        }
+                    }else{
+                        if (window.swiper[id].setWrapperTranslate){
+                            //console.log(222,"=",id,swiperY[id])
+                            window.swiper[id].setWrapperTranslate(swiperY[id]);
+                        }
+                        //window.swiper[id][window.swiper[id].length].setWrapperTranslate(swiperY[id]);
+                    }
+                    //window.swiper[id].setWrapperTranslate(swiperY[id]);
+                    //console.log(swiper[id].length)
+                }
+            }
+        },10)
     }
     componentWillUnmount() {
         let props = this.props;
@@ -49,6 +76,7 @@ class Channel extends Component {
         history.title=document.title;
         //记录此页为上一个历史页，防止后退时重新请求接口
         props.onPageHistory(JSON.stringify(history));
+        $(".swiper-contentlist0 .swiper-wrapper").css({"transform": "translate3d(0px, -138.429px, 0px)"});
     }
     render() {
         let props = this.props;
@@ -75,6 +103,8 @@ class Channel extends Component {
                     channelsData={props.channelsData}
                     listData={props.listData}
                     requestData={props.requestData}
+                    swiperY={props.swiperY}
+                    setY={props.setY}
                 />
             </div>
         )

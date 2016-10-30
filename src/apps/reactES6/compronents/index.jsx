@@ -26,13 +26,25 @@ class App extends React.Component {
             //当前类的下一页数据地址
             nextPage: "",
             //加载的方式，事件触发和刷新加载等
-            pageHistory: ""
+            pageHistory: "",
+            //存储滑动值
+            swiperY: {}
+        }
+        //记录滑动Y值
+        this.setY = (id,value) => {
+            let swiperY = this.state.swiperY;
+            swiperY["id_"+id] = value ? value : 0;
+            this.setState({swiperY});
         }
         //更新内容列表数据（本地存储用到）
         this.updateState = {
             //更新页面文档标题
             documentTitle:(documentTitle) => {
                 this.setState({documentTitle});
+            },
+            //更新活动栏目id
+            channelId: (channelId) => {
+                this.setState({channelId});
             },
             //更新列表数据
             channelsData: (channelsData,mainNav) => {
@@ -41,6 +53,7 @@ class App extends React.Component {
             //更新内容数据
             contentData: (contentData) => {
                 this.setState({contentData});
+
             },
             //更新主导航
             mainNav:(mainNav) => {
@@ -133,6 +146,11 @@ class App extends React.Component {
                 } else {
                     //请求到的是内容数据
                     this.setState({contentData: data});
+                }
+                //修改页面标题
+                if (data.title){
+                    this.setState({documentTitle:data.title});
+                    document.title=data.title;
                 }
                 //如果是函数，则回调
                 if (callback instanceof Function){
@@ -335,7 +353,9 @@ class App extends React.Component {
                     onPageHistory: this.pageHistory,
                     requestContentList:this.requestContentList,
                     localDB: this.localDB,
-                    timeDiff:this.timeDiff
+                    timeDiff:this.timeDiff,
+                    swiperY:this.state.swiperY,
+                    setY: this.setY
                 })}
             </div>
         )
