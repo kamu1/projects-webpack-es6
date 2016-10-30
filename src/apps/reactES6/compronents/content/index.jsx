@@ -1,6 +1,6 @@
 import React ,{Component} from 'react';
 import {Router,Link} from 'react-router';
-import TabNavigation from '../tabNavigation/index.jsx';
+import Header from '../header/index.jsx';
 import ContentInfo from './contentInfo.jsx';
 
 class Content extends Component {

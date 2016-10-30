@@ -6,7 +6,7 @@
 1. git clone https://github.com/kamu1/projects-webpack-es6.git
 1. cd projects-webpack-es6
 1. npm install
-1. webpack　　　　　或　webpack --watch
+1. webpack　　　　　 或　webpack --watch
 1. 运行dist/index.html　∟　http://localhost:3000/dist
 
 ###示例效果，手机扫一扫
