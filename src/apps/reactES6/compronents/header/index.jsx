@@ -197,7 +197,7 @@ class Nav1 extends Component {
         })
         return (
             <li key={props.id}>
-                <span onClick={(ev, id) => {this.onRequestContentList(ev,props.id)}}>{props.title}</span>
+                <span style={props.active ? {fontWeight:"bold",color:"#FFC107"}:{}} onClick={(ev, id) => {this.onRequestContentList(ev,props.id)}}>{props.title}</span>
                 <ul className="n">
                     {nav2}
                 </ul>
@@ -221,7 +221,7 @@ class Nav2 extends Component {
         let props=this.props;
         return (
             <li key={props.id}>
-                <span onClick={(ev, id) => {this.onRequestContentList(ev,props.id)}}>{props.title}</span>
+                <span style={props.active ? {fontWeight:"bold",color:"#FFC107"}:{}} onClick={(ev, id) => {this.onRequestContentList(ev,props.id)}}>{props.title}</span>
                 <ul className="n">
                     {props.navdata.map((item, i) => (
                         <li key={props.id + '' +item.id}>
