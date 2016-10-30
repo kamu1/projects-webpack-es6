@@ -77,8 +77,8 @@ var config = {
         //读取打包环境是否为生产环境
         new webpack.DefinePlugin({
           'process.env':{
-            'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-            // 'NODE_ENV': JSON.stringify("production")
+            // 'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+            'NODE_ENV': JSON.stringify("production")
           }
         }),
         //开启静态服务器

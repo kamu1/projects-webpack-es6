@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import Header from '../header/index.jsx';
 import $ from "webpack-zepto";
 //window.Hammer =require('react-hammerjs');
@@ -29,6 +30,7 @@ class ContentInfo extends Component {
     }
     componentDidMount(){
         this.onSwiper();
+
     }
 
     render(){
@@ -71,7 +73,12 @@ class ContentInfo extends Component {
                         <div className="swiper-slide">
                             <div style={{margin:"10px 10px 30px 10px",lineHeight:"1.8em"}}>
                                 <h3 style={{textAlign:"center"}}><span dangerouslySetInnerHTML={{__html: data.title}} style={{textAlign:"left",display:"inline-block"}}></span></h3>
-                                <h6 className="n" dangerouslySetInnerHTML={{__html: data.subTitle}} style={{color:"#666",borderBottom:"1px solid #eee",paddingBottom:5}}></h6>
+                                {data.videoUrl ?
+                                <div>
+                                    <iframe ref="videoFrame" frameborder="0" style={{width:"100%",height:"280px",border:0}} src={data.videoUrl} allowfullscreen></iframe>
+                                </div> : ''}
+                                {data.subTitle ?
+                                <h6 className="n" dangerouslySetInnerHTML={{__html: data.subTitle}} style={{color:"#666",borderBottom:"1px solid #eee",paddingBottom:5}}></h6> : ''}
                                 {imgs.length && (!data.imageGroup || !data.imageGroup.length) ?
                                     <ul className={"n imgs img_" + imgs.length} style={{textAlign:"center"}}>
                                         {imgs.map((item,i) => (
@@ -93,7 +100,8 @@ class ContentInfo extends Component {
 
                                         ))}
                                     </ul> : ''}
-                                <div dangerouslySetInnerHTML={{__html: data.content}}></div>
+                                {data.content ?
+                                <div dangerouslySetInnerHTML={{__html: data.content}}></div> : ''}
                             </div>
                         </div>
                     </div>

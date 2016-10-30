@@ -81,7 +81,6 @@ class Header extends Component {
                 recommend.push(item);
             }
         });
-        //console.log("@",this.props)
         let recommendNav = recommend.map((item, i) => (
             <RecommendNav
                 key={'recommendNav'+i}
