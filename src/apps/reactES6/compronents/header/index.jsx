@@ -89,6 +89,7 @@ class Header extends Component {
                 updateState={props.updateState}
                 mainNav={props.mainNav}
                 childNav={props.childNav}
+                swiperY={props.swiperY}
             />
         ));
         return (
@@ -148,9 +149,17 @@ class RecommendNav extends Component {
             props.updateState.childNav(props.childNav);
             //更新webTitle
             props.updateState.documentTitle(props.item.title);
-            setTimeout(function(){
-                $("#radio_navmenu").prop("checked",true);
-            },50);
+            //每次点选项卡判断滑屏尺寸是否异常，则修正
+            $(".contentlist-slide").each(function(){
+                //安卓下列表滚动异常的问题
+                if ($(this).height() < $(this).children().height()+10){
+                    $(this).height($(this).children().height()+80);
+                }
+            });
+            //恢复之前记录的滑动Y值
+            if (props.swiperY["id_"+id]){
+                window.swiper["id_"+id].setWrapperTranslate(props.swiperY["id_"+id]);
+            }
         }
     }
     render(){
@@ -174,6 +183,17 @@ class Nav1 extends Component {
             setTimeout(function(){
                 $("#radio_navmenu").prop("checked",true);
             },50);
+            //每次点选项卡判断滑屏尺寸是否异常，则修正
+            $(".contentlist-slide").each(function(){
+                //安卓下列表滚动异常的问题
+                if ($(this).height() < $(this).children().height()+10){
+                    $(this).height($(this).children().height()+80);
+                }
+            });
+            //恢复之前记录的滑动Y值
+            if (props.swiperY["id_"+id]){
+                window.swiper["id_"+id].setWrapperTranslate(props.swiperY["id_"+id]);
+            }
         }
     }
     render(){
@@ -217,6 +237,17 @@ class Nav2 extends Component {
             setTimeout(function(){
                 $("#radio_navmenu").prop("checked",true);
             },50);
+            //每次点选项卡判断滑屏尺寸是否异常，则修正
+            $(".contentlist-slide").each(function(){
+                //安卓下列表滚动异常的问题
+                if ($(this).height() < $(this).children().height()+10){
+                    $(this).height($(this).children().height()+80);
+                }
+            });
+            //恢复之前记录的滑动Y值
+            if (props.swiperY["id_"+id]){
+                window.swiper["id_"+id].setWrapperTranslate(props.swiperY["id_"+id]);
+            }
         }
     }
     render(){

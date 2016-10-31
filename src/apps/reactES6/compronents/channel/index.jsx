@@ -57,12 +57,10 @@ class Channel extends Component {
                         if (window.swiper[id].setWrapperTranslate){
                             window.swiper[id].setWrapperTranslate(swiperY[id]);
                         }
-                        //window.swiper[id][window.swiper[id].length].setWrapperTranslate(swiperY[id]);
                     }
-                    //window.swiper[id].setWrapperTranslate(swiperY[id]);
                 }
             }
-        },10)
+        },1000)
     }
     componentWillUnmount() {
         let props = this.props;
@@ -90,6 +88,7 @@ class Channel extends Component {
                     localDB={props.localDB}
                     updateState={props.updateState}
                     requestContentList={props.requestContentList}
+                    swiperY={props.swiperY}
                     backBtn="hide"
                 />
                 <ContentList

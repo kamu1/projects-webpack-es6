@@ -51,7 +51,10 @@ class ItemList extends Component {
                 observeParents:true,//修改swiper的父元素时，自动初始化swiper
                 onInit:(swiper)=>{
                     //加载后清除引用的class，防止被同名重新初始化
-                    $(".swiper-contentlist"+id).removeClass("swiper-contentlist"+id);
+                    //$(".swiper-contentlist"+id).removeClass("swiper-contentlist"+id);
+                    if (props.swiperY["id_"+props.id]){
+                        swiper.setWrapperTranslate(props.swiperY["id_"+props.id]);
+                    }
                 },
                 onSetTransition: (swiper, transiton) => {
                     //记录每个滑块的Y值
@@ -73,8 +76,8 @@ class ItemList extends Component {
                 onTouchStart: (swiper, even) => {
                     $(".contentlist-slide").each(function(){
                         //安卓下列表滚动异常的问题
-                        if ($(this).height() < $(this).children().height()){
-                            $(this).height($(this).children().height()+160);
+                        if ($(this).height() < $(this).children().height()+10){
+                            $(this).height($(this).children().height()+80);
                         }
                     });
                     swiper.onResize();
@@ -129,16 +132,18 @@ class ItemList extends Component {
                 <div className={"swiper-container swiper-contentlist" + props.id}>
                     <div className="swiper-wrapper">
                         <div className="swiper-slide contentlist-slide">
-                            <div className="tab-area"></div>
-                            <ol className="n card-list">
-                                {itemList}
-                            </ol>
-                            {props.item.nextPage ?
-                                <div style={{margin:30,textAlign:"center",fontSize:12}} onClick={(ev,url,id) => {this.onNextPage(ev, props.item.nextPage, props.id)}}>
-                                    加载更多</div> :
-                                <div style={{margin:30,textAlign:"center",fontSize:12,color:"#999"}}>
-                                    到底了</div>
-                            }
+                            <div>
+                                <div className="tab-area"></div>
+                                <ol className="n card-list">
+                                    {itemList}
+                                </ol>
+                                {props.item.nextPage ?
+                                    <div style={{margin:30,textAlign:"center",fontSize:12}} onClick={(ev,url,id) => {this.onNextPage(ev, props.item.nextPage, props.id)}}>
+                                        加载更多</div> :
+                                    <div style={{margin:30,textAlign:"center",fontSize:12,color:"#999"}}>
+                                        到底了</div>
+                                }
+                            </div>
                         </div>
                     </div>
                     <div className="swiper-scrollbar"></div>
