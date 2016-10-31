@@ -163,7 +163,7 @@ class ItemRow extends Component {
             <li key={'contentList'+props.index}>
                 <Link to={`/content/${item.pid}/${item.id}`} activeClassName="active">
                     <div className="title"><h3 dangerouslySetInnerHTML={{__html: item.title}}></h3></div>
-                    {item.subTitle ? <div className="subTitle"><h6>{item.subTitle}</h6></div> : ''}
+                    {item.subTitle ? <div className={"subTitle "}><h6 className={!item.summary ? "summary" : ""}>{item.subTitle}</h6></div> : ''}
                     {item.summary ?
                         <div className="info">
                             {item.imageUrl && !imgs2 ?
